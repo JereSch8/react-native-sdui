@@ -1,0 +1,122 @@
+{
+  "components": [
+    {
+      "uid": "HOME_BANNER",
+      "identifier": "BANNER",
+      "widget": {
+        "type": "banner",
+        "url": "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg"
+      }
+    },
+    {
+      "uid": "HOME_LIST",
+      "identifier": "LIST",
+      "widget": {
+        "type": "row",
+        "widgets": [
+          {
+            "identifier": "AVATAR",
+            "widget": {
+              "type": "avatar",
+              "title": "Avatar1",
+              "color": "red"
+            }
+          },
+          {
+            "identifier": "AVATAR",
+            "widget": {
+              "type": "avatar",
+              "title": "Avatar2",
+              "color": "blue"
+            }
+          },
+          {
+            "uid": "HOME_IMAGE2",
+            "identifier": "IMAGE",
+            "widget": {
+              "type": "image",
+              "url": "https://petapixel.com/assets/uploads/2022/08/fdfs19-800x533.jpg"
+            }
+          },
+          {
+            "uid": "HOME_IMAGE3",
+            "identifier": "IMAGE",
+            "widget": {
+              "type": "image",
+              "url": "https://www.nyip.edu/images/cms/photo-articles/the-best-place-to-focus-in-a-landscape.jpg"
+            }
+          },
+          {
+            "identifier": "AVATAR",
+            "widget": {
+              "type": "avatar",
+              "title": "Avatar3",
+              "color": "green"
+            }
+          },
+          {
+            "uid": "HOME_IMAGE4",
+            "identifier": "IMAGE",
+            "widget": {
+              "type": "image",
+              "url": "https://eltallerdehector.com/wp-content/uploads/2022/07/cara-de-mario-bros-png.png"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "uid": "HOME_LIST",
+      "identifier": "LIST2",
+      "widget": {
+        "type": "column",
+        "widgets": [
+          {
+            "uid": "HOME_CELL",
+            "identifier": "CELL",
+            "widget": {
+              "type": "cell",
+              "title": "Celda 1",
+              "color": "red"
+            }
+          },
+          {
+            "uid": "HOME_CELL1",
+            "identifier": "CELL",
+            "widget": {
+              "type": "cell",
+              "title": "Celda 2",
+              "color": "blue"
+            }
+          },
+          {
+            "uid": "HOME_CELL2",
+            "identifier": "CELL",
+            "widget": {
+              "type": "cell",
+              "title": "Celda 3",
+              "color": "green"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "uid": "HOME_IMAGE4",
+      "identifier": "IMAGE",
+      "widget": {
+        "type": "image",
+        "url": "https://eltallerdehector.com/wp-content/uploads/2022/07/cara-de-mario-bros-png.png"
+      }
+    },
+    {
+      "uid": "HOME_BUTTON",
+      "identifier": "BUTTON",
+      "widget": {
+        "type": "button",
+        "title": "@STR_NEXT",
+        "action": "GO_TO_DETAILS"
+      }
+    }
+  ]
+}
