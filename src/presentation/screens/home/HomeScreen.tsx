@@ -7,7 +7,7 @@ import { GetHomeUIUseCase } from '../../../domain/usecases/GetHomeUIUseCase'
 import { HomeRepository } from '../../../data/repositories/HomeRepository'
 import { HomeUIremoteDataSource } from '../../../data/datasources/HomeUIremoteDataSource'
 import { HomeClient } from '../../../data/client/HomeClient'
-import { widgetCompositer } from '../../utils/widgetCompositer'
+import { widgetComposer } from '../../utils/widgetCompositer'
 
 import { HomeViewModel } from './HomeViewModel'
 
@@ -34,7 +34,7 @@ interface ViewProp {
 const HomeView = observer(({ viewModel }: ViewProp) => {
 
     if (viewModel.uiState.components.length > 0) {
-        return widgetCompositer(viewModel.uiState)
+        return widgetComposer(viewModel.uiState)
     }
 
     return <View style={{ backgroundColor: 'red' }} />

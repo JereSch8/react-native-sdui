@@ -1,3 +1,4 @@
+
 # Aplicación React Native con Server-Driven UI (SDUI) y Clean Architecture
 
 Este proyecto es un prototipo de una aplicación desarrollada en React Native que implementa la metodología de Server-Driven UI (SDUI). El objetivo principal es demostrar cómo se puede utilizar SDUI para mejorar la eficiencia, flexibilidad y mantenibilidad de una aplicación móvil.

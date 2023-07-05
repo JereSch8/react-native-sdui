@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center',
         alignSelf: 'center',
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: 16
     }
 })

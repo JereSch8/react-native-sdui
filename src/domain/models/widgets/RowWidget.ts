@@ -1,4 +1,4 @@
-import { Component } from "../Components";
+import { Component } from "../Component";
 
 export interface RowWidget {
     type: 'row';
