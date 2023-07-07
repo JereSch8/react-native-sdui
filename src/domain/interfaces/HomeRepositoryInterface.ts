@@ -1,5 +1,7 @@
-import { DataComponents } from "../models/DataComponents";
+import { Components } from "../models/Components";
+import { WidgetsData } from "../models/WidgetsData";
 
 export interface HomeRepositoryInterface {
-    getUI(): Promise<DataComponents>
+    getUI(): Promise<Components>
+    getDataUI(): Promise<WidgetsData>
 }

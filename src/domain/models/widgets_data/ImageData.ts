@@ -1,6 +1,6 @@
 import { TypeComponent } from "../TypeComponent";
 
-export interface ImageWidget {
+export interface ImageData {
     type: TypeComponent.IMAGE;
-    style?: string;
+    url: string;
 }

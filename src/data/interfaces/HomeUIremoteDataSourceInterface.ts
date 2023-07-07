@@ -1,5 +1,5 @@
-import { DataComponents } from "../../domain/models/DataComponents";
+import { Components } from "../../domain/models/Components";
 
 export interface HomeUIremoteDataSourceInterface {
-    getComponents(): Promise<DataComponents>
+    getComponents(): Promise<Components>
 }

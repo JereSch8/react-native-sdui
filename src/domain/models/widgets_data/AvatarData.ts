@@ -1,6 +1,7 @@
 import { TypeComponent } from "../TypeComponent";
 
-export interface AvatarWidget {
+export interface AvatarData {
     type: TypeComponent.AVATAR;
-    style?: string;
+    title: string;
+    color: string;
 }
