@@ -1,110 +1,80 @@
 {
-  "components": [
-    {
-      "uid": "HOME_TITLE",
-      "widget": {
-        "type": "title",
-        "title": "Ejemplo 1"
+    "components": [
+        {
+            "uid": "HOME_VISOR",
+            "widget": {
+                "type": "visor"
+            }
+        },
+        {
+            "uid": "HOME_ROW",
+            "widget": {
+                "type": "row",
+                "widgets": [
+                    {
+                        "uid": "HOME_IMG1",
+                        "widget": {
+                            "type": "image"
+                        }
+                    },
+                    {
+                        "uid": "HOME_IMG2",
+                        "widget": {
+                            "type": "image"
+                        }
+                    },
+                    {
+                        "uid": "HOME_IMG3",
+                        "widget": {
+                            "type": "image"
+                        }
+                    },
+                    {
+                        "uid": "HOME_IMG4",
+                        "widget": {
+                            "type": "image"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "HOME_TITLE",
+            "widget": {
+                "type": "title"
+            }
+        },
+        {
+            "uid": "HOME_BANNER",
+            "widget": {
+                "type": "banner"
+            }
+        },
+        {
+            "uid": "HOME_COLUMN",
+            "widget": {
+                "type": "column",
+                "widgets": [
+                    {
+                        "uid": "HOME_CELL1",
+                        "widget": {
+                            "type": "cell"
+                        }
+                    },
+                    {
+                        "uid": "HOME_CELL2",
+                        "widget": {
+                            "type": "cell"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "uid": "HOME_BUTTON",
+            "widget": {
+                "type": "button"
+            }
         }
-    },
-    {
-      "uid": "HOME_VISOR",
-      "widget": {
-        "type": "visor",
-        "currentAmount": "$1.000.530,00",
-        "monthlyAmount": "$450.000,00",
-        "spentAmount": "$200.530,00"
-        }
-    },
-    {
-      "uid": "HOME_AVATAR",
-      "widget": {
-        "type": "avatar",
-        "title": "Avatar 1",
-        "color": "red"
-      }
-    },
-    {
-      "uid": "HOME_LIST",
-      "widget": {
-        "type": "row",
-        "widgets": [
-          {
-            "uid": "HOME_IMAGE",
-            "widget": {
-              "type": "image",
-              "url": "https://petapixel.com/assets/uploads/2022/08/fdfs11-800x533.jpg"
-            }
-          },
-          {
-            "uid": "HOME_IMAGE1",
-            "widget": {
-              "type": "image",
-              "url": "https://images.unsplash.com/photo-1612441804231-77a36b284856?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
-            }
-          },
-          {
-            "uid": "HOME_IMAGE2",
-            "widget": {
-              "type": "image",
-              "url": "https://petapixel.com/assets/uploads/2022/08/fdfs19-800x533.jpg"
-            }
-          },
-          {
-            "uid": "HOME_IMAGE3",
-            "widget": {
-              "type": "image",
-              "url": "https://www.nyip.edu/images/cms/photo-articles/the-best-place-to-focus-in-a-landscape.jpg"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "uid": "HOME_BANNER",
-      "widget": {
-        "type": "banner",
-        "url": "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg"
-      }
-    },
-    {
-      "uid": "HOME_LIST2",
-      "widget": {
-        "type": "column",
-        "widgets": [
-          {
-            "uid": "HOME_CELL",
-            "widget": {
-              "type": "cell",
-              "title": "Celda 1",
-              "color": "red"
-            }
-          },
-          {
-            "uid": "HOME_CELL1",
-            "widget": {
-              "type": "cell",
-              "title": "Celda 2",
-              "color": "blue"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "uid": "HOME_BANNER1",
-      "widget": {
-        "type": "banner",
-        "url": "https://images.unsplash.com/photo-1612441804231-77a36b284856?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
-      }
-    },
-    {
-      "uid": "HOME_BUTTON",
-      "widget": {
-        "type": "button",
-        "title": "@STR_NEXT",
-        "action": "GO_TO_DETAILS"
-      }
-    }
-  ]
+    ]
 }
