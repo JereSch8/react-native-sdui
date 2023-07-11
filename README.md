@@ -65,3 +65,75 @@ El camino completo nos quedaria de la siguiente manera:
 
 
 A la izquierda podemos ver el esquema del JSON utilizado, puedes probar cambiar el JSON que se llama en el ***homeClient.ts*** ubicado en la carpeta *src/data/client* `const jsonData = JSON.stringify(jsonResponseUI1)` por el `jsonResponseUI2` ó tambien puedes crear tus propios JSON para ver como cambia la UI.
+
+## Deployment / Despliegue
+
+A continuación, encontraras una guía detallada paso a paso de como hacer para desplegar el proyecto de react-native.
+
+#### Paso 0: Clonar el repositorio
+
+
+```bash
+  git clone https://github.com/JereSch8/react-native-sdui.git
+```
+#### Paso 1: Instalar dependencias
+
+0. Navega al directorio raíz del proyecto clonado utilizando el siguiente comando:
+
+```bash
+  cd <DIRECTORIO_DEL_PROYECTO>
+```
+
+Reemplaza <DIRECTORIO_DEL_PROYECTO> con el nombre del directorio del proyecto clonado.
+
+1. Muevete a ésta rama `sdui-all-in-one`:
+
+```bash
+  git checkout sdui-all-in-one
+```
+
+2. Ejecuta el siguiente comando para instalar las dependencias del proyecto:
+
+```bash
+  npm install
+```
+
+Este comando instalará todas las dependencias necesarias que se encuentran en el archivo `package.json`.
+
+#### Paso 2: Ejecutar el proyecto
+
+0. Chequea que la ruta sea la raiz del proyecto `<DIRECTORIO_DEL_PROYECTO>`
+
+1. Asegúrate de tener un emulador de Android o iOS configurado y en funcionamiento, o conecta un dispositivo físico a tu computadora.
+
+2. Ejecuta el siguiente comando para lanzar el metro:
+
+```bash
+  npx react-native start
+```
+
+Este comando abrira la herramienta necesaria para que puedas ejecutar la aplicación en el dispositivo seleccionado. En este punto tienes 2 opciones, por un lado puedes presionar las letras que te sugiere el Metro `'a' para ejecutar en dispositivos Android` y `'i' para ejectuar en dispositivos iOS` ó seguir con el paso 3.
+
+3. En una nueva terminal que se encuentre tambien en la raiz del proyecto `<DIRECTORIO_DEL_PROYECTO>`. Ejecuta uno de los siguientes comandos según la plataforma en la que deseas ejecutar el proyecto:
+
+* Para ejecutar en Android:
+
+```bash
+  npx react-native run-android
+```
+
+* Para ejecutar en iOS:
+
+```bash
+  npx react-native run-ios
+```
+
+Estos comandos compilarán y ejecutarán la aplicación en el emulador o dispositivo físico.
+
+
+Esto es todo, en este punto deberias tener la aplicación corriendo!
+
+
+## Siguiente paso
+
+Si para este punto pudiste comprender toda la idea detras de ésta metodologia, te puedes dirigir a la rama [master](https://github.com/JereSch8/react-native-sdui/tree/main) de este mismo proyecto para ver una implementación mas compleja pero mas eficiente en terminos de datos consumidos y de renderizado. Encontraras una aplicación funcionando con SDUI la cual posee los ***datos de UI*** separados de los ***componentes de UI***. 
