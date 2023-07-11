@@ -1,22 +1,36 @@
 {
   "components": [
     {
-      "identifier": "AVATAR",
+      "uid": "HOME_TITLE",
+      "widget": {
+        "type": "title",
+        "title": "Ejemplo 1"
+        }
+    },
+    {
+      "uid": "HOME_VISOR",
+      "widget": {
+        "type": "visor",
+        "currentAmount": "$1.000.530,00",
+        "monthlyAmount": "$450.000,00",
+        "spentAmount": "$200.530,00"
+        }
+    },
+    {
+      "uid": "HOME_AVATAR",
       "widget": {
         "type": "avatar",
-        "title": "titulo",
+        "title": "Avatar 1",
         "color": "red"
       }
     },
     {
       "uid": "HOME_LIST",
-      "identifier": "LIST",
       "widget": {
         "type": "row",
         "widgets": [
           {
             "uid": "HOME_IMAGE",
-            "identifier": "IMAGE",
             "widget": {
               "type": "image",
               "url": "https://petapixel.com/assets/uploads/2022/08/fdfs11-800x533.jpg"
@@ -24,7 +38,6 @@
           },
           {
             "uid": "HOME_IMAGE1",
-            "identifier": "IMAGE",
             "widget": {
               "type": "image",
               "url": "https://images.unsplash.com/photo-1612441804231-77a36b284856?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
@@ -32,7 +45,6 @@
           },
           {
             "uid": "HOME_IMAGE2",
-            "identifier": "IMAGE",
             "widget": {
               "type": "image",
               "url": "https://petapixel.com/assets/uploads/2022/08/fdfs19-800x533.jpg"
@@ -40,7 +52,6 @@
           },
           {
             "uid": "HOME_IMAGE3",
-            "identifier": "IMAGE",
             "widget": {
               "type": "image",
               "url": "https://www.nyip.edu/images/cms/photo-articles/the-best-place-to-focus-in-a-landscape.jpg"
@@ -51,21 +62,18 @@
     },
     {
       "uid": "HOME_BANNER",
-      "identifier": "BANNER",
       "widget": {
         "type": "banner",
         "url": "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg"
       }
     },
     {
-      "uid": "HOME_LIST",
-      "identifier": "LIST2",
+      "uid": "HOME_LIST2",
       "widget": {
         "type": "column",
         "widgets": [
           {
             "uid": "HOME_CELL",
-            "identifier": "CELL",
             "widget": {
               "type": "cell",
               "title": "Celda 1",
@@ -74,7 +82,6 @@
           },
           {
             "uid": "HOME_CELL1",
-            "identifier": "CELL",
             "widget": {
               "type": "cell",
               "title": "Celda 2",
@@ -86,7 +93,6 @@
     },
     {
       "uid": "HOME_BANNER1",
-      "identifier": "BANNER",
       "widget": {
         "type": "banner",
         "url": "https://images.unsplash.com/photo-1612441804231-77a36b284856?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnRhaW4lMjBsYW5kc2NhcGV8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
@@ -94,7 +100,6 @@
     },
     {
       "uid": "HOME_BUTTON",
-      "identifier": "BUTTON",
       "widget": {
         "type": "button",
         "title": "@STR_NEXT",

@@ -1,6 +1,7 @@
 import { TypeComponent } from "../TypeComponent";
 
-export interface CellWidget {
+export interface CellData {
     type: TypeComponent.CELL;
-    style?: string;
+    title: string;
+    color: string;
 }

@@ -1,7 +1,7 @@
 import { HomeRepositoryInterface } from "../interfaces/HomeRepositoryInterface"
-import { Components } from "../models/Components"
+import { WidgetsData } from "../models/WidgetsData"
 
-export class GetHomeUIUseCase {
+export class GetHomeDataUseCase {
     private readonly repository: HomeRepositoryInterface
     constructor(
         repository: HomeRepositoryInterface
@@ -9,7 +9,7 @@ export class GetHomeUIUseCase {
         this.repository = repository
     }
 
-    public async invoke(): Promise<Components> {
-        return await this.repository.getUI()
+    public async invoke(): Promise<WidgetsData> {
+        return await this.repository.getDataUI()
     }
 }

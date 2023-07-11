@@ -1,6 +1,8 @@
-import { Component } from "../Components";
+import { Component } from "../Component";
+import { TypeComponent } from "../TypeComponent";
 
 export interface ColumnWidget {
-    type: 'column';
+    type: TypeComponent.COLUMN;
     widgets: Component[];
+    style?: string;
 }

@@ -1,5 +1,6 @@
 import { HomeRepositoryInterface } from '../../domain/interfaces/HomeRepositoryInterface';
-import { DataComponents } from '../../domain/models/DataComponents';
+import { Components } from '../../domain/models/Components';
+import { WidgetsData } from '../../domain/models/WidgetsData';
 import { HomeDatacacheDataSourceInterface } from '../interfaces/HomeDatacacheDataSourceInterface';
 import { HomeDataremoteDataSourceInterface } from '../interfaces/HomeDataremoteDataSourceInterface';
 import { HomeUIcacheDataSourceInterface } from '../interfaces/HomeUIcacheDataSourceInterface';
@@ -10,21 +11,24 @@ export class HomeRepository implements HomeRepositoryInterface {
     // private readonly homeUIcacheDataSource: HomeUIcacheDataSourceInterface
     private readonly homeUIremoteDataSource: HomeUIremoteDataSourceInterface
     // private readonly homeDataCacheDataSource: HomeDatacacheDataSourceInterface
-    // private readonly homeDataRemoteDataSource: HomeDataremoteDataSourceInterface
+    private readonly homeDataRemoteDataSource: HomeDataremoteDataSourceInterface
 
     constructor(
         // homeUIcacheDataSource: HomeUIcacheDataSourceInterface,
         homeUIremoteDataSource: HomeUIremoteDataSourceInterface,
         // homeDataCacheDataSource: HomeDatacacheDataSourceInterface,
-        // homeDataRemoteDataSource: HomeDataremoteDataSourceInterface
+        homeDataRemoteDataSource: HomeDataremoteDataSourceInterface
     ) {
         // this.homeUIcacheDataSource = homeUIcacheDataSource
         this.homeUIremoteDataSource = homeUIremoteDataSource
         // this.homeDataCacheDataSource = homeDataCacheDataSource
-        // this.homeDataRemoteDataSource = homeDataRemoteDataSource
+        this.homeDataRemoteDataSource = homeDataRemoteDataSource
+    }
+    async getDataUI(): Promise<WidgetsData> {
+        return this.homeDataRemoteDataSource.getWidgetData()
     }
 
-    async getUI(): Promise<DataComponents> {
+    async getUI(): Promise<Components> {
         return this.homeUIremoteDataSource.getComponents()
     }
 
