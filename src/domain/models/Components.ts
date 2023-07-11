@@ -6,5 +6,6 @@ export enum Components {
     COLUMN = 'column',
     IMAGE = 'image',
     ROW = 'row',
-    TITLE = 'title'
+    TITLE = 'title',
+    VISOR = 'visor'
 }

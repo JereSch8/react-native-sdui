@@ -8,11 +8,12 @@ import { Banner } from "../components/Banner";
 import { ItemsCell } from "../components/ItemsCell";
 import { Components } from "../../domain/models/Components";
 import { actionToFunction } from "./actionToFunction";
+import { Visor } from "../components/Visor";
 
 export const widgetComposer = (jsonData: DataComponents) => {
     return (
         <>
-            {jsonData.components.map((component, index) => {
+            {jsonData.components.map((component, _) => {
                 let widgetComponent: React.JSX.Element;
 
                 switch (component.widget?.type) {
@@ -86,6 +87,16 @@ export const widgetComposer = (jsonData: DataComponents) => {
                             >
                                 {component.widget.title}
                             </Text>
+                        );
+                        break;
+                    case Components.VISOR:
+                        widgetComponent = (
+                            <Visor
+                                key={component.uid}
+                                currentAmount={component.widget.currentAmount}
+                                monthlyAmount={component.widget.monthlyAmount}
+                                spentAmount={component.widget.spentAmount}
+                            />
                         );
                         break;
                     default:

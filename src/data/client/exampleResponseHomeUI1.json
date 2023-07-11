@@ -5,14 +5,15 @@
       "widget": {
         "type": "title",
         "title": "Ejemplo 1"
-        }
+      }
     },
     {
-      "uid": "HOME_AVATAR",
+      "uid": "HOME_VISOR",
       "widget": {
-        "type": "avatar",
-        "title": "Avatar 1",
-        "color": "red"
+        "type": "visor",
+        "currentAmount": "$1.030.530,00",
+        "monthlyAmount": "$250.000,00",
+        "spentAmount": "$200.530,00"
       }
     },
     {

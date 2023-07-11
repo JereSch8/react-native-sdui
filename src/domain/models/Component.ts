@@ -6,6 +6,7 @@ import { ColumnWidget } from "./widgets/ColumnWidget";
 import { ImageWidget } from "./widgets/ImageWidget";
 import { RowWidget } from "./widgets/RowWidget";
 import { TitleWidget } from "./widgets/TitleWidget";
+import { VisorWidget } from './widgets/VisorWidget';
 
 export interface Component {
     uid: string;
@@ -15,5 +16,6 @@ export interface Component {
     | CellWidget
     | ButtonWidget
     | ColumnWidget | RowWidget
-    | TitleWidget;
+    | TitleWidget
+    | VisorWidget;
 }
