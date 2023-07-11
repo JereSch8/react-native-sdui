@@ -1,6 +1,8 @@
 import { Component } from "../Component";
+import { TypeComponent } from "../TypeComponent";
 
 export interface RowWidget {
-    type: 'row';
+    type: TypeComponent.ROW;
     widgets: Component[];
+    style?: string;
 }

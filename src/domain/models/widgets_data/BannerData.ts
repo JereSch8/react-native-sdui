@@ -1,6 +1,6 @@
 import { TypeComponent } from "../TypeComponent";
 
-export interface BannerWidget {
+export interface BannerData {
     type: TypeComponent.BANNER;
-    style?: string;
+    url: string;
 }

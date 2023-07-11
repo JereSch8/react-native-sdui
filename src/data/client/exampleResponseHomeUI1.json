@@ -8,6 +8,15 @@
         }
     },
     {
+      "uid": "HOME_VISOR",
+      "widget": {
+        "type": "visor",
+        "currentAmount": "$1.000.530,00",
+        "monthlyAmount": "$450.000,00",
+        "spentAmount": "$200.530,00"
+        }
+    },
+    {
       "uid": "HOME_AVATAR",
       "widget": {
         "type": "avatar",

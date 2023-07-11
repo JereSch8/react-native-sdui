@@ -1,7 +1,6 @@
-import { Actions } from "../Actions";
+import { TypeComponent } from "../TypeComponent";
 
 export interface ButtonWidget {
-    type: 'button';
-    title: string;
-    action?: Actions;
+    type: TypeComponent.BUTTON;
+    style?: string;
 }

@@ -1,6 +1,6 @@
 import { TypeComponent } from "../TypeComponent";
 
-export interface TitleWidget {
+export interface TitleData {
     type: TypeComponent.TITLE;
-    style?: string;
+    title: string;
 }
