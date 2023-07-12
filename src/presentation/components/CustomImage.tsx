@@ -1,13 +1,14 @@
 import React from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View, ViewStyle } from 'react-native'
 
 interface Prop {
-  uri: string
+  uri: string,
+  style: ViewStyle
 }
 
-export const CustomImage = ({ uri }: Prop) => {
+export const CustomImage = ({ uri, style }: Prop) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Image
         style={styles.image}
         borderRadius={20}

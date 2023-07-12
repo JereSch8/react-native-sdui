@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, ScrollView, Text } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 
 import { Components } from "../../domain/models/Components";
 import { Avatar } from '../components/Avatar';
@@ -47,12 +47,18 @@ export const widgetComposer = (jsonComponent: Components, jsonData: WidgetsData)
                             break
                         case TypeComponent.IMAGE:
                             if (widgetDataWithType === TypeComponent.IMAGE) {
-                                widgetComponent = renderImage(widgetData.data)
+                                widgetComponent = renderImage(
+                                    widgetData.data,
+                                    component.widget?.style
+                                )
                             }
                             break
                         case TypeComponent.BANNER:
                             if (widgetDataWithType === TypeComponent.BANNER) {
-                                widgetComponent = renderBanner(widgetData.data)
+                                widgetComponent = renderBanner(
+                                    widgetData.data,
+                                    component.widget?.style
+                                )
                             }
                             break
                         case TypeComponent.CELL:
@@ -62,7 +68,10 @@ export const widgetComposer = (jsonComponent: Components, jsonData: WidgetsData)
                             break
                         case TypeComponent.BUTTON:
                             if (widgetDataWithType === TypeComponent.BUTTON) {
-                                widgetComponent = renderButton(widgetData.data)
+                                widgetComponent = renderButton(
+                                    widgetData.data,
+                                    component.widget?.style
+                                )
                             }
                             break
                         case TypeComponent.COLUMN:
@@ -72,7 +81,8 @@ export const widgetComposer = (jsonComponent: Components, jsonData: WidgetsData)
 
                                 widgetComponent = renderColumn(
                                     { components: columnComponents },
-                                    { widgetsData: dataWidget }
+                                    { widgetsData: dataWidget },
+                                    component.widget?.style
                                 )
                             }
                             break
@@ -83,13 +93,16 @@ export const widgetComposer = (jsonComponent: Components, jsonData: WidgetsData)
 
                                 widgetComponent = renderRow(
                                     { components: columnRow },
-                                    { widgetsData: dataWidget }
+                                    { widgetsData: dataWidget },
+                                    component.widget?.style
                                 )
                             }
                             break
                         case TypeComponent.TITLE:
                             if (widgetDataWithType === TypeComponent.TITLE) {
-                                widgetComponent = renderTitle(widgetData.data)
+                                widgetComponent = renderTitle(
+                                    widgetData.data,
+                                    component.widget?.style)
                             }
                             break
                         case TypeComponent.VISOR:
@@ -110,12 +123,20 @@ const renderAvatar = (data: AvatarData) => {
     return <Avatar color={color} text={title.toUpperCase()} />
 }
 
-const renderImage = (data: ImageData) => {
-    return <CustomImage uri={data.url} />
+const renderImage = (
+    data: ImageData,
+    styleObj: string | undefined
+) => {
+    const style = styleObj ? JSON.parse(styleObj) : {};
+    return <CustomImage style={style} uri={data.url} />
 }
 
-const renderBanner = (data: BannerData) => {
-    return <Banner uri={data.url} />
+const renderBanner = (
+    data: BannerData,
+    styleObj: string | undefined
+) => {
+    const style = styleObj ? JSON.parse(styleObj) : {};
+    return <Banner style={style} uri={data.url} />
 }
 
 const renderCell = (data: CellData) => {
@@ -123,35 +144,61 @@ const renderCell = (data: CellData) => {
     return <ItemsCell color={color} text={title} />
 }
 
-const renderButton = (data: ButtonData) => {
+const renderButton = (
+    data: ButtonData,
+    styleObj: string | undefined
+) => {
+    const style = styleObj ? JSON.parse(styleObj) : { flex: 1 };
     const { title, action } = data;
+
     return (
-        <Button
-            title={title}
-            onPress={actionToFunction(action)}
-        />
+        <View style={style}>
+            <Button
+                title={title}
+                onPress={actionToFunction(action)}
+            />
+        </View>
+
     );
 };
 
-const renderColumn = (components: Components, widgetsData: WidgetsData) => {
+const renderColumn = (
+    components: Components,
+    widgetsData: WidgetsData,
+    styleObj: string | undefined
+) => {
+    const style = styleObj ? JSON.parse(styleObj) : { flex: 1 };
+
     return (
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={style} nestedScrollEnabled>
             {widgetComposer(components, widgetsData)}
         </ScrollView>
     )
 }
 
-const renderRow = (components: Components, widgetsData: WidgetsData) => {
+const renderRow = (
+    components: Components,
+    widgetsData: WidgetsData,
+    styleObj: string | undefined
+) => {
+    const style = styleObj ? JSON.parse(styleObj) : {};
     return (
-        <ScrollView showsHorizontalScrollIndicator={false} horizontal>
+        <ScrollView
+            style={style}
+            showsHorizontalScrollIndicator={false}
+            horizontal>
             {widgetComposer(components, widgetsData)}
         </ScrollView>
     )
 }
 
-const renderTitle = (data: TitleData) => {
+const renderTitle = (
+    data: TitleData,
+    styleObj: string | undefined
+) => {
+    const style = styleObj ? JSON.parse(styleObj) : {};
     return (
-        <Text style={{ fontSize: 24, textAlign: 'center' }}>
+        <Text style={[{ fontSize: 24, textAlign: 'center' }, style]}>
             {data.title}
         </Text>
     )
