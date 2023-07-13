@@ -12,13 +12,17 @@ import { widgetComposer } from '../../utils/widgetComposer'
 import { HomeViewModel } from './HomeViewModel'
 import { HomeDataremoteDataSource } from '../../../data/datasources/HomeDataremoteDataSource'
 import { GetHomeDataUseCase } from '../../../domain/usecases/GetHomeDataUseCase'
+import { HomeUICacheDataSource } from '../../../data/datasources/HomeUIcacheDataSource';
+import { HomeCache } from '../../../data/cache/HomeCache'
 
 export const HomeScreen = () => {
 
     const client = new HomeClient()
+    const cache = new HomeCache()
     const datauiDataSource = new HomeDataremoteDataSource(client)
     const uiDataSource = new HomeUIremoteDataSource(client)
-    const repo = new HomeRepository(uiDataSource, datauiDataSource)
+    const uiCacheSource = new HomeUICacheDataSource(cache)
+    const repo = new HomeRepository(uiCacheSource, uiDataSource, datauiDataSource)
     const getUIuseCase = new GetHomeUIUseCase(repo)
     const getDatauseCase = new GetHomeDataUseCase(repo)
     const viewModel = new HomeViewModel(getUIuseCase, getDatauseCase)

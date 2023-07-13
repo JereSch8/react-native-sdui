@@ -9,8 +9,11 @@ export class HomeUIremoteDataSource implements HomeUIremoteDataSourceInterface {
     constructor(client: HomeClientInterface) {
         this.client = client
     }
+    getVersion(): Promise<string> {
+        return this.client.fetchVersionUI()
+    }
 
-    async getComponents(): Promise<Components> {
+    getComponents(): Promise<Components> {
         return this.client.fetchUI()
     }
 }

@@ -1,117 +1,99 @@
 {
+  "version": "2.0.0",
   "components": [
     {
-      "uid": "HOME_TITLE",
+      "uid": "HOME_VISOR",
       "widget": {
-        "type": "title",
-        "title": "Ejemplo 2"
-        }
-    },
-    {
-      "uid": "HOME_BANNER",
-      "widget": {
-        "type": "banner",
-        "url": "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg"
+        "type": "visor"
       }
     },
     {
-      "uid": "HOME_LIST",
+      "uid": "HOME_ROW",
       "widget": {
         "type": "row",
         "widgets": [
           {
-            "uid": "HOME_AVATAR1",
+            "uid": "HOME_IMG1",
             "widget": {
-              "type": "avatar",
-              "title": "Avatar1",
-              "color": "red"
+              "style": "{\"height\": 185}",
+              "type": "image"
             }
           },
           {
-            "uid": "HOME_AVATAR2",
+            "uid": "HOME_IMG2",
             "widget": {
-              "type": "avatar",
-              "title": "Avatar2",
-              "color": "blue"
+              "style": "{\"height\": 85, \"width\": 185}",
+              "type": "image"
             }
           },
           {
-            "uid": "HOME_IMAGE2",
+            "uid": "HOME_IMG3",
             "widget": {
-              "type": "image",
-              "url": "https://petapixel.com/assets/uploads/2022/08/fdfs19-800x533.jpg"
+              "style": "{\"height\": 185, \"width\": 185}",
+              "type": "image"
             }
           },
           {
-            "uid": "HOME_IMAGE3",
+            "uid": "HOME_IMG4",
             "widget": {
-              "type": "image",
-              "url": "https://www.nyip.edu/images/cms/photo-articles/the-best-place-to-focus-in-a-landscape.jpg"
-            }
-          },
-          {
-            "uid": "HOME_AVATAR",
-            "widget": {
-              "type": "avatar",
-              "title": "Avatar0",
-              "color": "green"
-            }
-          },
-          {
-            "uid": "HOME_IMAGE4",
-            "widget": {
-              "type": "image",
-              "url": "https://eltallerdehector.com/wp-content/uploads/2022/07/cara-de-mario-bros-png.png"
+              "type": "image"
             }
           }
         ]
       }
     },
     {
-      "uid": "HOME_LIST2",
+      "uid": "HOME_TITLE",
+      "widget": {
+        "style": "{\"fontWeight\": \"bold\", \"fontSize\": 45}",
+        "type": "title"
+      }
+    },
+    {
+      "uid": "HOME_BANNER",
+      "widget": {
+        "style": "{\"height\": 285}",
+        "type": "banner"
+      }
+    },
+    {
+      "uid": "HOME_COLUMN",
       "widget": {
         "type": "column",
+        "style": "{\"height\": 185, \"backgroundColor\": \"grey\", \"marginBottom\": 70, \"paddingHorizontal\": 20}",
         "widgets": [
-          {
-            "uid": "HOME_CELL",
-            "widget": {
-              "type": "cell",
-              "title": "Celda 1",
-              "color": "red"
-            }
-          },
           {
             "uid": "HOME_CELL1",
             "widget": {
-              "type": "cell",
-              "title": "Celda 2",
-              "color": "blue"
+              "type": "cell"
             }
           },
           {
             "uid": "HOME_CELL2",
             "widget": {
-              "type": "cell",
-              "title": "Celda 3",
-              "color": "green"
+              "type": "cell"
+            }
+          },
+          {
+            "uid": "HOME_CELL3",
+            "widget": {
+              "type": "cell"
+            }
+          },
+          {
+            "uid": "HOME_CELL4",
+            "widget": {
+              "type": "cell"
             }
           }
         ]
       }
     },
     {
-      "uid": "HOME_IMAGE4",
-      "widget": {
-        "type": "image",
-        "url": "https://eltallerdehector.com/wp-content/uploads/2022/07/cara-de-mario-bros-png.png"
-      }
-    },
-    {
       "uid": "HOME_BUTTON",
       "widget": {
-        "type": "button",
-        "title": "@STR_NEXT",
-        "action": "GO_TO_DETAILS"
+        "style": "{\"height\": 50, \"width\": \"100%\" , \"alignItems\": \"center\"}",
+        "type": "button"
       }
     }
   ]
