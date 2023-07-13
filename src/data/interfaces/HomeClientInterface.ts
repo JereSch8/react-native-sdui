@@ -4,4 +4,5 @@ import { WidgetsData } from "../../domain/models/WidgetsData"
 export interface HomeClientInterface {
     fetchUI(): Promise<Components>
     fetchData(): Promise<WidgetsData>
+    fetchVersionUI(): Promise<string>
 }
