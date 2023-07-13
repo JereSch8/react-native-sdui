@@ -11,8 +11,12 @@ import { WidgetsData } from "../../domain/models/WidgetsData";
 
 export class HomeClient implements HomeClientInterface {
 
+    async fetchVersionUI(): Promise<string> {
+        return `1.0.0`
+    }
+
     async fetchUI(): Promise<Components> {
-        const jsonData = JSON.stringify(jsonResponseUI2)
+        const jsonData = JSON.stringify(jsonResponseUI1)
         const components: Components = JSON.parse(jsonData);
 
         return components
