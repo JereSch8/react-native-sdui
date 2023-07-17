@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { Button, ScrollView, View } from 'react-native'
 
 import { observer } from 'mobx-react-lite'
 
@@ -14,6 +14,7 @@ import { HomeDataremoteDataSource } from '../../../data/datasources/HomeDataremo
 import { GetHomeDataUseCase } from '../../../domain/usecases/GetHomeDataUseCase'
 import { HomeUICacheDataSource } from '../../../data/datasources/HomeUIcacheDataSource';
 import { HomeCache } from '../../../data/cache/HomeCache'
+import { GetHomeUpdateUI } from '../../../domain/usecases/GetHomeUpdateUI'
 
 export const HomeScreen = () => {
 
@@ -25,15 +26,23 @@ export const HomeScreen = () => {
     const repo = new HomeRepository(uiCacheSource, uiDataSource, datauiDataSource)
     const getUIuseCase = new GetHomeUIUseCase(repo)
     const getDatauseCase = new GetHomeDataUseCase(repo)
-    const viewModel = new HomeViewModel(getUIuseCase, getDatauseCase)
+    const getUpdateuseCase = new GetHomeUpdateUI(repo)
+    const viewModel = new HomeViewModel(getUIuseCase, getDatauseCase, getUpdateuseCase)
 
     viewModel.fetchUI()
     viewModel.fetchData()
 
     return (
-        <ScrollView key={1} style={{ flex: 1 }}>
-            <HomeView key={viewModel.fetchData.toString()} viewModel={viewModel} />
-        </ScrollView>
+        <View style={{ flex: 1 }} >
+            <ScrollView key={1} style={{ flex: 1 }}>
+                <HomeView key={viewModel.fetchData.toString()} viewModel={viewModel} />
+            </ScrollView>
+            <Button
+                title='Update'
+                onPress={() => viewModel.updateUI()}
+            />
+        </View >
+
     )
 }
 

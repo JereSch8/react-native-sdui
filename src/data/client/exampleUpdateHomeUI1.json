@@ -1,0 +1,56 @@
+{
+    "version": "1.0.0",
+    "components": [
+        {
+            "uid": "HOME_VISOR",
+            "widget": {
+                "type": "visor"
+            }
+        },
+        {
+            "uid": "HOME_IMG1",
+            "widget": {
+                "type": "image"
+            }
+        },
+        {
+            "uid": "HOME_TITLE",
+            "widget": {
+                "type": "banner"
+            }
+        },
+        {
+            "uid": "HOME_BUTTON",
+            "widget": {
+                "style": "{\"height\": 0, \"width\": 0}",
+                "type": "button"
+            }
+        }
+    ],
+    "widgetsData": [
+        {
+            "uid": "HOME_IMG1",
+            "data": {
+                "type": "image",
+                "url": "https://static.wikia.nocookie.net/mariokart/images/e/ed/MK8D_BCP_Mario.webp/revision/latest?cb=20230624151650"
+            }
+        },
+        {
+            "uid": "HOME_VISOR",
+            "data": {
+                "type": "visor",
+                "currentAmount": "$760.800.530,00",
+                "monthlyAmount": "$1.250.090,00",
+                "spentAmount": "$400.530,00"
+            }
+        },
+        {
+            "uid": "HOME_TITLE",
+            "data": {
+                "type": "banner",
+                "url": "https://img.freepik.com/fotos-premium/super-oferta-sello-promocional-aislado-superficie-blanca-campana-publicitaria-letras-portugues-brasil_59529-1087.jpg"
+            }
+        }
+        
+    ]
+}

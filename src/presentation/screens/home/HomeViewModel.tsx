@@ -4,17 +4,21 @@ import { GetHomeUIUseCase } from "../../../domain/usecases/GetHomeUIUseCase";
 import { Components } from "../../../domain/models/Components";
 import { WidgetsData } from "../../../domain/models/WidgetsData";
 import { GetHomeDataUseCase } from "../../../domain/usecases/GetHomeDataUseCase";
+import { GetHomeUpdateUI } from '../../../domain/usecases/GetHomeUpdateUI';
 
 export class HomeViewModel {
     private readonly homeUIUseCase: GetHomeUIUseCase
     private readonly homeDataUIUseCase: GetHomeDataUseCase
+    private readonly homeUpdateUIUseCase: GetHomeUpdateUI
 
     constructor(
         homeUIUseCase: GetHomeUIUseCase,
-        homeDataUIUseCase: GetHomeDataUseCase
+        homeDataUIUseCase: GetHomeDataUseCase,
+        homeUpdateUIUseCase: GetHomeUpdateUI
     ) {
         this.homeUIUseCase = homeUIUseCase
         this.homeDataUIUseCase = homeDataUIUseCase
+        this.homeUpdateUIUseCase = homeUpdateUIUseCase
         makeAutoObservable(this)
     }
 
@@ -36,6 +40,14 @@ export class HomeViewModel {
 
     async fetchData() {
         this.dataUIState = await this.homeDataUIUseCase.invoke()
+    }
+
+    async updateUI() {
+        console.log(`llamando al useCase`);
+        
+        const result = await this.homeUpdateUIUseCase.invoke()
+        this.dataUIState = result.widgetsData
+        this.uiState = result.components
     }
 
 }
