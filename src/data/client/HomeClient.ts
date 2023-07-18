@@ -6,7 +6,11 @@ import * as jsonResponseUI2 from './exampleResponseHomeUI2.json';
 
 import * as jsonResponseData1 from './exampleResponseHomeData1.json';
 import * as jsonResponseData2 from './exampleResponseHomeData2.json';
+
+import * as jsonUpdateUI1 from './exampleUpdateHomeUI1.json';
+
 import { WidgetsData } from "../../domain/models/WidgetsData";
+import { UpdateUI } from '../models/UpdateUI';
 
 
 export class HomeClient implements HomeClientInterface {
@@ -27,6 +31,13 @@ export class HomeClient implements HomeClientInterface {
         const dataWidgets: WidgetsData = JSON.parse(jsonData);
 
         return dataWidgets
+    }
+
+    async updateUI(): Promise<UpdateUI> {
+        const jsonData = JSON.stringify(jsonUpdateUI1)
+        const uiUpdate: UpdateUI = JSON.parse(jsonData);
+
+        return uiUpdate
     }
 
 }
