@@ -81,9 +81,9 @@ Los componentes de la interfaz de usuario en React Native para este proyecto en 
 
 Estos componentes van hacer enviados por un JSON con la siguiente estructura:
 
-```bash
+```json
   {
-  "version": "2.0.0",
+  "version": "1.0.0",
   "components": [
     {
       "uid": "HOME_VISOR",
@@ -103,6 +103,12 @@ Estos componentes van hacer enviados por un JSON con la siguiente estructura:
       "widget": {
         "style": "{\"height\": 285}",
         "type": "banner"
+      }
+    },
+    {
+      "uid": "HOME_BUTTON",
+         "widget": {
+         "type": "button"
       }
     }
   ]
@@ -124,19 +130,191 @@ Podemos identificar los siguientes `key`:
       - `type`: Nos sirve para identificar el tipo de widget que deseamos representar en el front-end.
 
 
+#### Como transformar el JSON a un componente de React-Native
+
+Para lograr ésto contamos con una función de transformación, que lo que hace es, dado un ***elemento*** en el **JSON** lo mappeamos a un ***componente*** pre-construido en React-Native.
+
+```typescript
+export const widgetComposer = (jsonComponent: Components, jsonData: WidgetsData) => {
+    return (
+        <>
+            {jsonComponent.components.map((component, _) => {
+                let widgetComponent: React.JSX.Element = <></>
+                let widgetData: WidgetData | undefined
+
+                try {
+                    widgetData = jsonData.widgetsData.find(
+                        widget => widget.uid === component.uid
+                    )
+                } catch (e) {
+                    console.error(`error: ${e}`);
+                    return widgetComponent
+                }
+                if (widgetData && widgetData.data != undefined) {
+                    const widgetType = component.widget?.type
+                    const widgetDataWithType = widgetData.data?.type
+
+                    switch (widgetType) {
+                        case TypeComponent.BANNER:
+                            if (widgetDataWithType === TypeComponent.BANNER) {
+                                widgetComponent = renderBanner(
+                                    widgetData.data,
+                                    component.widget?.style
+                                )
+                            }
+                           break
+                        //...
+                        case TypeComponent.TITLE:
+                            if (widgetDataWithType === TypeComponent.TITLE) {
+                                widgetComponent = renderTitle(
+                                    widgetData.data,
+                                    component.widget?.style)
+                            }
+                            break
+                        case TypeComponent.VISOR:
+                            if (widgetDataWithType === TypeComponent.VISOR) {
+                                widgetComponent = renderVisor(widgetData.data)
+                            }
+                            break
+                    }
+                }
+                return <React.Fragment key={component.uid}>{widgetComponent}</React.Fragment>
+            })}
+        </>
+    )
+}
+```
+<a href="https://github.com/JereSch8/react-native-sdui/blob/develop/src/presentation/utils/widgetComposer.tsx" target="_blank">Ver código completo</a>
+
+En ésta sección nos vamos a enfocar especificamente en el `jsonComponents` que es un listado de *componentes* en formato JSON (los que nos vinieron del servidor), para diferenciarlos de los componentes de React-Native le llamaremos **elementos** a estos componentes en formato JSON.
+
+Lo que hacemos en esta función, es, por un lado, transformar el `jsonComponents` (listado de elementos JSON) a un "listado" de componentes de React Native, para lograrlo utilizamos el `map` lo que hacemos dentro es agarrar y consultar por el `type` del *elemento* y asignarle un *componente React Native* correspondiente y luego al final lo integramos a la lista mediante el `<React.Fragment key={component.uid}>{widgetComponent}</React.Fragment>` prestemos especial atención al `key` que le estamos asignando el `uid` del componente, ésto nos va a permitir más adelante cuando hagamos actualizaciones de los componentes, que React Native trabaje de forma muy óptima y eficaz para realizar la recomposicion de los componentes que fueron modificados.
+
+
 ### Datos de la interfaz de usuario (UI)
 Los datos de la UI son la información necesaria para poblar los componentes generados previamente por el servidor remoto. Estos datos son enviados por separados de la estructura de los componentes y se utilizan para rellenar de contenido los componentes de la aplicación. Algunos ejemplos de datos de la UI pueden ser:
 
-- Texto para mostrar en los componentes Text.
+- Texto y valores para mostrar en los componentes.
 - URLs de imágenes para mostrar en los componentes Image.
 - Acciones a realizar al presionar un botón en el componente Button.
+
+```json
+{
+    "widgetsData": [
+        {
+            "uid": "HOME_VISOR",
+            "data": {
+                "type": "visor",
+                "currentAmount": "$1.000.530,00",
+                "monthlyAmount": "$250.000,00",
+                "spentAmount": "$200.530,00"
+            }
+        },
+        {
+            "uid": "HOME_TITLE",
+            "data": {
+                "type": "title",
+                "title": "Descuentos!"
+            }
+        },
+        {
+            "uid": "HOME_BANNER",
+            "data": {
+                "type": "banner",
+                "url": "https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg"
+            }
+        },
+        {
+            "uid": "HOME_BUTTON",
+            "data": {
+                "type": "button",
+                "title": "Detalles",
+                "action": "GO_TO_DETAILS"
+            }
+        }
+    ]
+}
+```
+
+Podemos identificar los siguientes `key`:
+
+- `widgetsData`: Es donde se crea la estructura de componentes, es un listado de widgets para ser representados por el cliente y construir la UI.
+   - `uid`: Nos sirve para identificar el componente de manera única. Este uid luego es utilizado como `key` en los componentes creados, para así optimizar los procesos de actualizacion.
+   - `data`: Nos indica que a continuación vienen los datos del widget que deseamos rellenar en la UI.
+      - `type`: Nos sirve para identificar el tipo de widget que deseamos representar en el front-end. (Obligatorio)
+        
+      - `url`: Es un campo que lo encontramos en las images y los banners, nos proporcina la URL asociada a una imagen.
+      - `title`: Es un campo que lo encontramos en los botones, celdas y avatares para definir el texto que se mostrará en él.
+      - `action`: Es un campo que lo encontramos en los botones para definir el comportamiento que tendrá el botón al ser presionado (Está asociado a una función pre-programada).
+      - `color`: Es un campo que lo encontramos en las celdas y avatares para definir el color del background que tendrá.
+      - `currentAmount`: Es un campo que lo encontramos en el visor y nos indica el saldo actual de la cuenta del usuario.
+      - `monthlyAmount`: Es un campo que lo encontramos en el visor y nos indica el saldo ingresado éste mes en la cuenta del usuario.
+      - `spentAmount`: Es un campo que lo encontramos en el visor y nos indica el saldo gastado éste mes en la cuenta del usuario.
 
 ### Actualización de los componentes de la interfaz de usuario (UI)
 React Native maneja eficientemente la actualización de elementos de la UI utilizando el atributo "key" (identificador único) asignado a cada componente. Cuando se produce un cambio en los datos enviados desde el servidor remoto, React Native compara los "uid" de los componentes existentes con los nuevos "uid" para determinar qué componentes deben actualizarse.
 
 Mediante esta comparación, React Native identifica qué componentes han cambiado y solo realiza las actualizaciones necesarias en la interfaz de usuario, en lugar de volver a renderizar todos los componentes. Esto mejora significativamente el rendimiento de la aplicación y proporciona una experiencia fluida para los usuarios. (Es impresionante lo bien que gestiona esto React-Native)
 
+```json
+{
+    "version": "1.0.0",
+    "components": [
+        {
+            "uid": "HOME_VISOR",
+            "widget": {
+                "type": "visor"
+            }
+        },
+        {
+            "uid": "HOME_TITLE",
+            "widget": {
+                "type": "banner"
+            }
+        },
+        {
+            "uid": "HOME_BUTTON",
+            "widget": {
+                "style": "{\"height\": 0, \"width\": 0}",
+                "type": "button"
+            }
+        }
+    ],
+    "widgetsData": [
+        {
+            "uid": "HOME_VISOR",
+            "data": {
+                "type": "visor",
+                "currentAmount": "$760.800.530,00",
+                "monthlyAmount": "$1.250.090,00",
+                "spentAmount": "$400.530,00"
+            }
+        },
+        {
+            "uid": "HOME_TITLE",
+            "data": {
+                "type": "banner",
+                "url": "https://img.freepik.com/fotos-premium/super-oferta-sello-promocional-aislado-superficie-blanca-campana-publicitaria-letras-portugues-brasil_59529-1087.jpg"
+            }
+        },
+        {
+            "uid": "HOME_BUTTON",
+            "data": {
+                "type": "button",
+                "title": "Ocultar",
+                "action": ""
+            }
+        }
+    ]
+}
+```
+En este JSON, podemos notar que se manda la informacion tanto del componente de UI como el de la data asociada a ese componente esto con el fin de poder redibujar el componente deseado con los nuevos datos. Los JSON que encontramos dentro, son identicos a los mostrados de manera separada arriba en los otros dos ejes. De esta forma podemos modificar/eliminar/agregar nuevos componentes a nuestra UI.
 
+En este caso en concreto con la actualización propuesta en este JSON, lo que estamos logrando es lo siguiente:
+
+- Por un lado, modificar los valores de un componente ya existente que en éste caso en particular es el *Visor*.
+- En segundo lugar, mostramos como cambiar enteramente un componente, en este caso concretamente como cambiar un *Text* a un *Banner*.
+- Y por último, como ocultar un componente, que lo estamos haciendo con el *Button*.
 
 ## Instalación y configuración
 
