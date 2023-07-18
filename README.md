@@ -5,6 +5,8 @@ Este proyecto es un prototipo de una aplicación desarrollada en React Native qu
 
 En este prototipo, se implementará un flujo de SDUI en una aplicación React Native. Se utilizarán componentes personalizados y una estructura modular para facilitar la separación de la obtención de datos y la generación de la interfaz de usuario. Se explorarán las prácticas recomendadas para la gestión de estados y la actualización dinámica de la interfaz de usuario en respuesta a los cambios en los datos recibidos desde el servidor.
 
+***NOTA: La explicación acerca de este proyecto es la continuación de [ésta rama](https://github.com/JereSch8/react-native-sdui/tree/sdui-all-in-one#readme) por lo que es recomendable primero entender la idea expuesta en dicha rama y luego regresar aquí y continuar profundizando sobre SDUI, ya que en el link mencionado podran encontrar una guia paso a paso de como comenzar a construir su aplicación utilizando ésta metodologia.***
+
 ### Características
 
 - Interpretación y transformación de los datos recibidos en componentes de interfaz de usuario dinámicos.
@@ -64,11 +66,11 @@ Esto puede ayudar a mantener la coherencia visual, mejorar la eficiencia de desa
 </p>
 
 
-## Detalles de la implementación
+# Detalles de la implementación
 
 Vamos a dividir la explicación en tres ejes principales, los cuales son *Componentes de la UI*, *Datos de la UI* y *Actualización de elementos de la interfaz de usuario*.
 
-### Componentes de la interfaz de usuario (UI)
+## Componentes de la interfaz de usuario (UI)
 Los componentes de la interfaz de usuario en React Native para este proyecto en concreto son los siguientes:
 
 - **Avatar:** Componente para mostrar un circulo con un texto en pantalla.
@@ -130,7 +132,7 @@ Podemos identificar los siguientes `key`:
       - `type`: Nos sirve para identificar el tipo de widget que deseamos representar en el front-end.
 
 
-#### Como transformar el JSON a un componente de React-Native
+### Como transformar el JSON a un componente de React-Native
 
 Para lograr ésto contamos con una función de transformación, que lo que hace es, dado un ***elemento*** en el **JSON** lo mappeamos a un ***componente*** pre-construido en React-Native.
 
@@ -191,7 +193,7 @@ En ésta sección nos vamos a enfocar especificamente en el `jsonComponents` que
 Lo que hacemos en esta función, es, por un lado, transformar el `jsonComponents` (listado de elementos JSON) a un "listado" de componentes de React Native, para lograrlo utilizamos el `map` lo que hacemos dentro es agarrar y consultar por el `type` del *elemento* y asignarle un *componente React Native* correspondiente y luego al final lo integramos a la lista mediante el `<React.Fragment key={component.uid}>{widgetComponent}</React.Fragment>` prestemos especial atención al `key` que le estamos asignando el `uid` del componente, ésto nos va a permitir más adelante cuando hagamos actualizaciones de los componentes, que React Native trabaje de forma muy óptima y eficaz para realizar la recomposicion de los componentes que fueron modificados.
 
 
-### Datos de la interfaz de usuario (UI)
+## Datos de la interfaz de usuario (UI)
 Los datos de la UI son la información necesaria para poblar los componentes generados previamente por el servidor remoto. Estos datos son enviados por separados de la estructura de los componentes y se utilizan para rellenar de contenido los componentes de la aplicación. Algunos ejemplos de datos de la UI pueden ser:
 
 - Texto y valores para mostrar en los componentes.
@@ -251,7 +253,136 @@ Podemos identificar los siguientes `key`:
       - `monthlyAmount`: Es un campo que lo encontramos en el visor y nos indica el saldo ingresado éste mes en la cuenta del usuario.
       - `spentAmount`: Es un campo que lo encontramos en el visor y nos indica el saldo gastado éste mes en la cuenta del usuario.
 
-### Actualización de los componentes de la interfaz de usuario (UI)
+### Como transformar el JSON de datos y poblar los componente de React-Native con estos datos
+
+Para lograr ésto contamos seguimos trabajando sobre la misma función de transformación, que además de hacer lo mencionado arriba tambien se encarga de insertar los datos dentro de nuestros componentes de React-Native.
+
+```typescript
+export const widgetComposer = (jsonComponent: Components, jsonData: WidgetsData) => {
+    return (
+        <>
+            {jsonComponent.components.map((component, _) => {
+                let widgetComponent: React.JSX.Element = <></>
+                let widgetData: WidgetData | undefined
+
+                try {
+                    widgetData = jsonData.widgetsData.find(
+                        widget => widget.uid === component.uid
+                    )
+                } catch (e) {
+                    console.error(`error: ${e}`);
+                    return widgetComponent
+                }
+
+                if (widgetData && widgetData.data != undefined) {
+                    const widgetType = component.widget?.type
+                    const widgetDataWithType = widgetData.data?.type
+
+                    switch (widgetType) {
+                        // ...
+                        case TypeComponent.BANNER:
+                            if (widgetDataWithType === TypeComponent.BANNER) {
+                                widgetComponent = renderBanner(
+                                    widgetData.data,
+                                    component.widget?.style
+                                )
+                            }
+                        case TypeComponent.BUTTON:
+                            if (widgetDataWithType === TypeComponent.BUTTON) {
+                                widgetComponent = renderButton(
+                                    widgetData.data,
+                                    component.widget?.style
+                                )
+                            }
+                            break
+                        // ...
+                        case TypeComponent.VISOR:
+                            if (widgetDataWithType === TypeComponent.VISOR) {
+                                widgetComponent = renderVisor(widgetData.data)
+                            }
+                            break
+                    }
+                }
+                return <React.Fragment key={component.uid}>{widgetComponent}</React.Fragment>
+            })}
+        </>
+    )
+}
+
+//...
+
+const renderBanner = (
+    data: BannerData,
+    styleObj: string | undefined
+) => {
+    const style = styleObj ? JSON.parse(styleObj) : {};
+    return <Banner style={style} uri={data.url} />
+}
+
+const renderButton = (
+    data: ButtonData,
+    styleObj: string | undefined
+) => {
+    const style = styleObj ? JSON.parse(styleObj) : { flex: 1 };
+    const { title, action } = data;
+
+    return (
+        <View style={style}>
+            <Button
+                title={title}
+                onPress={actionToFunction(action)}
+            />
+        </View>
+
+    );
+};
+
+// ...
+
+const renderVisor = (data: VisorData) => {
+    const { currentAmount, monthlyAmount, spentAmount } = data
+    return (
+        <Visor
+            currentAmount={currentAmount}
+            monthlyAmount={monthlyAmount}
+            spentAmount={spentAmount}
+        />
+    )
+}
+```
+<a href="https://github.com/JereSch8/react-native-sdui/blob/develop/src/presentation/utils/widgetComposer.tsx" target="_blank">Ver código completo</a>
+
+En ésta sección nos vamos a enfocar especificamente en el `jsonData` que es un listado de *datos* en formato JSON (los que nos vinieron del servidor) para poblar nuestros componentes.
+
+Ahora mirando la misma función y haciendo foco en la parte de la transformación de los datos del JSON, podemos notar una serie de validaciones, lo primero que hacemos es buscar los datos asociados al componente en el cual estamos iterando, esto lo logramos mediante el uso de `find` y chequeando los `uid` tanto del *componente* como del *dato*. una vez que tenemos el dato asociado al componente se lo pasamos como parametro a las funciones `render...(data)` estas tienen como objetivo, dado un componente proporcionarle toda la información necesaria para que pueda ser representado en la UI.
+
+Para el caso puntual del botón que utiliza funciones pre-programadas vemos que además hace uso de la funcion `actionToFunction()`. De lo que se encarga ésta función es mappear la acción a una funcionalidad especifica en el código, la función se ve da la siguiente forma:
+
+```typescript
+export function actionToFunction(action: Actions | undefined): () => void {
+  switch (action) {
+    case Actions.GO_TO_DETAILS:
+      return () => {
+        console.log("Navigate to Details");
+      };
+    case Actions.CHANGE_THEME:
+      return () => {
+        console.log("Change theme");
+      };
+    case Actions.SET_NAME:
+      return () => {
+        console.log("Set name");
+      };
+    default:
+      return () => {
+        console.log("Acción desconocida");
+      };
+  }
+}
+```
+<a href="https://github.com/JereSch8/react-native-sdui/blob/develop/src/presentation/utils/actionToFunction.tsx" target="_blank">Ver código completo</a>
+
+## Actualización de los componentes de la interfaz de usuario (UI)
 React Native maneja eficientemente la actualización de elementos de la UI utilizando el atributo "key" (identificador único) asignado a cada componente. Cuando se produce un cambio en los datos enviados desde el servidor remoto, React Native compara los "uid" de los componentes existentes con los nuevos "uid" para determinar qué componentes deben actualizarse.
 
 Mediante esta comparación, React Native identifica qué componentes han cambiado y solo realiza las actualizaciones necesarias en la interfaz de usuario, en lugar de volver a renderizar todos los componentes. Esto mejora significativamente el rendimiento de la aplicación y proporciona una experiencia fluida para los usuarios. (Es impresionante lo bien que gestiona esto React-Native)
@@ -308,6 +439,7 @@ Mediante esta comparación, React Native identifica qué componentes han cambiad
     ]
 }
 ```
+
 En este JSON, podemos notar que se manda la informacion tanto del componente de UI como el de la data asociada a ese componente esto con el fin de poder redibujar el componente deseado con los nuevos datos. Los JSON que encontramos dentro, son identicos a los mostrados de manera separada arriba en los otros dos ejes. De esta forma podemos modificar/eliminar/agregar nuevos componentes a nuestra UI.
 
 En este caso en concreto con la actualización propuesta en este JSON, lo que estamos logrando es lo siguiente:
@@ -315,13 +447,153 @@ En este caso en concreto con la actualización propuesta en este JSON, lo que es
 - Por un lado, modificar los valores de un componente ya existente que en éste caso en particular es el *Visor*.
 - En segundo lugar, mostramos como cambiar enteramente un componente, en este caso concretamente como cambiar un *Text* a un *Banner*.
 - Y por último, como ocultar un componente, que lo estamos haciendo con el *Button*.
+ 
 
-## Instalación y configuración
+### Como actualizar los componente de React-Native ya renderizados.
 
-1. Clona este repositorio en tu máquina local.
-2. Navega hasta el directorio raíz del proyecto.
-3. Ejecuta el comando `npm install` para instalar las dependencias.
-4. Ejecuta el comando `npm start` para iniciar la aplicación en el emulador o dispositivo configurado.
+Para lograr ésto nos vamos a sumergir en la *capa de datos* y vamos a visualizar el [HomeRepository](https://github.com/JereSch8/react-native-sdui/blob/develop/src/data/repositories/HomeRepository.ts) especificamente la funcion **getUpdateUI()** (En este caso, estamos disparando el evento mediante una función, pero se podria utilizar de otras maneras, por ejemplo, mediante *pushNotifications*)
+
+```typescript
+async getUpdateUI(): Promise<WidgetsUpdate> {
+        const newUI = await this.homeUIremoteDataSource.getUpdateUI();
+        const savedComponents = (await this.homeUIcacheDataSource.getUIFromCache()).components;
+
+        const updatedComponents = this.replaceComponents(newUI.components, savedComponents);
+        const updatedData = this.replaceData(newUI.widgetsData, this.tempDataUI.widgetsData);
+
+        return {
+            components: { components: updatedComponents },
+            widgetsData: { widgetsData: updatedData }
+        };
+    }
+```
+<a href="https://github.com/JereSch8/react-native-sdui/blob/develop/src/data/repositories/HomeRepository.ts" target="_blank">Ver código completo</a>
+
+Lo que hacemos aquí, es tomar los datos proveidos por el JSON y extraer la parte de los *jsonComponents* y por otro lado la de *jsonData* para luego con los nuevos datos de componentes actualizar el listado existente, esto lo logramos utilizando la funcion `replaceComponents()` que se ve de la siguiente forma:
+
+```typescript
+ private replaceComponents(
+        newComponents: Component[],
+        components: Component[]
+    ): Component[] {
+        return components.map(savedComponent => {
+            if (savedComponent.widget?.type === TypeComponent.COLUMN
+                || savedComponent.widget?.type === TypeComponent.ROW
+            ) {
+                savedComponent.widget.widgets = this.replaceComponents(newComponents, savedComponent.widget.widgets);
+            }
+            const matchingComponent = newComponents.find(component => component.uid === savedComponent.uid);
+
+            return (matchingComponent) ? matchingComponent : savedComponent;
+        });
+    }
+```
+<a href="https://github.com/JereSch8/react-native-sdui/blob/develop/src/data/repositories/HomeRepository.ts" target="_blank">Ver código completo</a>
+
+En ésta funcion hacemos la mezcla de los componentes actuales guardados en caché y los nuevos componentes proveidos por el servidor, esto lo logramos trabajando con los `uid` de cada componente.
+
+Por otro lado, tambien tenemos la función  `replaceData()` que se ve de la siguiente forma:
+
+```typescript
+  private replaceData(
+        newData: WidgetData[],
+        data: WidgetData[]
+    ): WidgetData[] {
+        return data.map(savedData => {
+            if (savedData.data?.type === TypeComponent.COLUMN
+                || savedData.data?.type === TypeComponent.ROW
+            ) {
+                savedData.data.widgets = this.replaceData(newData, savedData.data.widgets);
+            }
+            const matchingData = newData.find(data => data.uid === savedData.uid);
+
+            return (matchingData) ? matchingData : savedData
+        });
+    }
+}
+```
+<a href="https://github.com/JereSch8/react-native-sdui/blob/develop/src/data/repositories/HomeRepository.ts" target="_blank">Ver código completo</a>
+
+En ésta funcion hacemos la mezcla de los datos actuales guardados en una variable temporal `private tempDataUI: WidgetsData` y los nuevos datos proveidos por el servidor, esto también lo logramos trabajando con los `uid` de cada componente.
+
+Luego el resto de magia sucede gracias a la reactividad utilizada en el View-Model con [MobX](https://mobx.js.org/react-integration.html) y a la gran capacidad que tiene react-native para recomponer los componentes que cambiaron en el arbol de widget. Realmente quede impresionado por lo bien que maneja esta recomposicion de manera automágica.
+
+## 
+
+***En los tres ejes vimos recursividad en las funciones, la cual no detallamos por qué sucedia, esto fue para no agregar complejidad a la explicación. Ahora estamos en condiciones de comprender por qué nos encontramos con éstas funciones recursivas. Esto se debe a que existen componentes que dentro de sí poseen otro arbol de componentes, esto lo vemos en componentes como filas (ROW) y columnas (COLUMN), la recursividad la estamos utilizando para poder ingresar dentro de esos componentes y poder representar también lo que tienen dentro.***
+
+## 
+
+## Requisitos previos al despliegue
+
+- Tener [Android Studio](https://developer.android.com/studio) instalado (Si tenes MAC tambien el [Xcode](https://developer.apple.com/xcode/))
+- [Node JS >=16](https://nodejs.org/es)
+
+
+## Instalaciones y configuraciones
+
+A continuación, encontraras una guía detallada paso a paso de como hacer para desplegar el proyecto de react-native.
+
+#### Paso 0: Clonar el repositorio
+
+
+```bash
+  git clone https://github.com/JereSch8/react-native-sdui.git
+```
+#### Paso 1: Instalar dependencias
+
+0. Navega al directorio raíz del proyecto clonado utilizando el siguiente comando:
+
+```bash
+  cd <DIRECTORIO_DEL_PROYECTO>
+```
+
+Reemplaza <DIRECTORIO_DEL_PROYECTO> con el nombre del directorio del proyecto clonado.
+
+1. Ejecuta el siguiente comando para instalar las dependencias del proyecto:
+
+```bash
+  npm install
+```
+
+Este comando instalará todas las dependencias necesarias que se encuentran en el archivo `package.json`.
+
+2. Asegúrate de tener las variables de entorno de ANDROID_HOME configuradas en tu sistema.
+    - Si no la tenes podes agregar un fichero `local.properties` en la carpeta de `android` generada en el proyecto y hacer la siguiente configuración `sdk.dir=<DIRECCION_DE_TU_SDK_DE_ANDROID>`, ejemplo : `sdk.dir = /home/TU_USER_LINUX/Android/Sdk`
+   
+
+#### Paso 2: Ejecutar el proyecto
+
+0. Chequea que la ruta sea la raiz del proyecto `<DIRECTORIO_DEL_PROYECTO>`
+
+1. Asegúrate de tener un emulador de Android o iOS configurado y en funcionamiento, o conecta un dispositivo físico a tu computadora.
+
+2. Ejecuta el siguiente comando para lanzar el metro:
+
+```bash
+  npx react-native start
+```
+
+Este comando abrira la herramienta necesaria para que puedas ejecutar la aplicación en el dispositivo seleccionado. En este punto tienes 2 opciones, por un lado puedes presionar las letras que te sugiere el Metro `'a' para ejecutar en dispositivos Android` y `'i' para ejectuar en dispositivos iOS` ó seguir con el paso 3.
+
+3. En una nueva terminal que se encuentre tambien en la raiz del proyecto `<DIRECTORIO_DEL_PROYECTO>`. Ejecuta uno de los siguientes comandos según la plataforma en la que deseas ejecutar el proyecto:
+
+* Para ejecutar en Android:
+
+```bash
+  npx react-native run-android
+```
+
+* Para ejecutar en iOS:
+
+```bash
+  npx react-native run-ios
+```
+
+Estos comandos compilarán y ejecutarán la aplicación en el emulador o dispositivo físico.
+
+Esto es todo, en este punto deberias tener la aplicación corriendo!
+
 
 ## FAQ
 
